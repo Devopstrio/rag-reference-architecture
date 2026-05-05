@@ -4,7 +4,7 @@
 
 <h1>RAG Reference Architecture Platform</h1>
 
-<p><strong>The Strategic Architecture for Enterprise-Grade Retrieval-Augmented Generation Systems</strong></p>
+<p><strong>The Strategic Architecture for Enterprise-Grade Retrieval-Augmented Generation Systems.</strong></p>
 
 [![Standard: RAG Intelligence](https://img.shields.io/badge/Standard-RAG--Intelligence-emerald.svg?style=for-the-badge&labelColor=000000)]()
 [![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-blue.svg?style=for-the-badge&labelColor=000000)]()
@@ -13,7 +13,7 @@
 <br/>
 
 > **"Context is the bridge to intelligence."** 
-> RAG Reference Architecture is an enterprise-grade platform designed to demonstrate the building blocks of scalable, secure, and production-ready Retrieval-Augmented Generation (RAG). It provides the blueprint for document ingestion pipelines, vector search optimization, and LLM integration patterns that ensure accuracy, reduce hallucinations, and protect data privacy at scale.
+> **RAG Reference Architecture** is an enterprise-grade platform designed to demonstrate the building blocks of scalable, secure, and production-ready Retrieval-Augmented Generation (RAG). It provides the blueprint for document ingestion pipelines, vector search optimization, and LLM integration patterns that ensure accuracy and factual grounding.
 
 </div>
 
@@ -21,423 +21,263 @@
 
 ## 🏛️ Executive Summary
 
-While Large Language Models (LLMs) are powerful, their knowledge is static and they are prone to hallucinations. RAG solves this by grounding the LLM in dynamic, authoritative enterprise data.
+While Large Language Models (LLMs) are powerful, their knowledge is static and they are prone to hallucinations. Organizations often fail to deploy AI safely because they lack the structured retrieval mechanisms required to ground LLMs in dynamic, authoritative enterprise data, leading to inaccurate outputs and data leakage risks.
 
-This platform provides the **RAG Intelligence Control Plane**. It implements a complete **Retrieval Pipeline**—from semantic chunking and embedding generation to high-performance vector search and context-aware generation. By treating context as a first-class citizen, it enables the creation of AI systems that are not just smart, but contextually aware and factually grounded in your organization's specific knowledge base.
+This platform provides the **RAG Intelligence Control Plane**. It implements a complete **Retrieval Intelligence Framework**, enabling AI Architects and ML Engineers to manage the RAG lifecycle as a first-class citizen. By automating semantic chunking and orchestrating multi-modal ingestion, we ensure that every AI interaction is contextually aware, factually grounded, and protected with enterprise-grade security guardrails.
+
+---
+
+## 📐 Architecture Storytelling: Principal Reference Models
+
+### 1. Principal Architecture: Global RAG Intelligence & Semantic Retrieval Plane
+This diagram illustrates the end-to-end flow from multi-modal document ingestion to vector embedding, semantic retrieval, context-aware prompt assembly, and grounded generation.
+
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph IngestionHub["Multi-Modal Ingestion Hub"]
+        direction TB
+        Docs["Corporate Docs (PDF/Office)"]
+        Wikis["Knowledge Bases (Confluence/Notion)"]
+        Apps["SaaS Data (Slack/Salesforce)"]
+        DBs["Structured Data (SQL/NoSQL)"]
+    end
+
+    subgraph IntelligenceEngine["Retrieval Intelligence Hub"]
+        direction TB
+        API["FastAPI RAG Gateway"]
+        Chunker["Semantic Chunking Engine"]
+        Embedder["Embedding Generator (OAI/Titan)"]
+        Retriever["Hybrid Retrieval & Reranker"]
+    end
+
+    subgraph VectorPlane["Vector Storage & Lifecycle"]
+        direction TB
+        VectorDB["Enterprise Vector Store (Pinecone/Milvus)"]
+        Index["Vector Indexing (HNSW/IVF)"]
+        CDC["CDC Synchronization Hub"]
+    end
+
+    subgraph OperationsHub["Institutional AI Hub"]
+        direction TB
+        Scorecard["RAG Precision Scorecard"]
+        Hallucination["Hallucination Detector"]
+        Audit["Forensic Retrieval Lake"]
+    end
+
+    subgraph DevOps["RAG-as-Code Orchestration"]
+        direction TB
+        Prompts["GitOps Prompt Registry"]
+        TF["Terraform RAG Modules"]
+        Privacy["PII & Privacy Filter"]
+    end
+
+    %% Flow Arrows
+    IngestionHub -->|1. Extract Content| API
+    API -->|2. Chunk & Normalize| Chunker
+    Chunker -->|3. Generate Vectors| Embedder
+    Embedder -->|4. Index Data| Index
+    Index -->|5. Store| VectorDB
+    
+    User["User Query"] -->|6. Request| API
+    API -->|7. Retrieve Context| Retriever
+    Retriever <-->|8. Vector Lookup| VectorDB
+    Retriever -->|9. Scrub PII| Privacy
+    Privacy -->|10. Assemble Prompt| API
+    
+    API -->|11. Generate Answer| User
+    API -->|12. Score Result| Scorecard
+    Scorecard -->|13. Detect Hallucination| Hallucination
+    
+    TF -->|14. Provision Hub| IntelligenceEngine
+    Prompts -->|15. Update Context| API
+
+    %% Styling
+    classDef ingestion fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#e0f2f1,stroke:#004d40,stroke-width:2px;
+    classDef vector fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px;
+    classDef ops fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
+    classDef devops fill:#fffde7,stroke:#f57f17,stroke-width:2px;
+
+    class IngestionHub ingestion;
+    class IntelligenceEngine intel;
+    class VectorPlane vector;
+    class OperationsHub ops;
+    class DevOps devops;
+```
+
+### 2. The RAG Lifecycle Management Flow
+The continuous path of enterprise knowledge from initial ingestion and embedding to retrieval-augmented generation and auditing.
+
+```mermaid
+graph LR
+    Ingest["Ingest & Chunk"] --> Embed["Embed & Index"]
+    Embed --> Retrieve["Retrieve & Rank"]
+    Retrieve --> Augment["Augment & Gen"]
+    Augment --> Audit["Forensic Audit"]
+```
+
+### 3. Multi-Modal Ingestion Hub
+Standardizing the extraction and normalization of data across PDFs, Wikis, SaaS apps, and databases for high-fidelity indexing.
+
+```mermaid
+graph LR
+    Pdf["Unstructured (PDFs)"] --> Hub["Normalizer"]
+    Sql["Structured (SQL)"] --> Hub
+    Slack["Conversational (Slack)"] --> Hub
+    Hub --> Stream["Semantic Content Stream"]
+```
+
+### 4. Semantic Retrieval & Ranking Engine
+Combining high-speed vector search with Cross-encoder re-ranking to ensure the most relevant context is delivered to the LLM.
+
+```mermaid
+graph TD
+    Query["User Query"] --> Vector["Vector Search (Top-100)"]
+    Vector --> Rerank["Cross-Encoder Reranker"]
+    Rerank --> TopK["Top-K Relevant Chunks"]
+```
+
+### 5. Context Injection & Prompt Engineering Flow
+The strategic assembly of retrieved document chunks into optimized LLM prompt templates to maximize factual grounding.
+
+```mermaid
+graph LR
+    Chunks["Retrieved Chunks"] --> Assembler["Prompt Assembler"]
+    Query["User Query"] --> Assembler
+    Assembler --> Prompt["Grounded LLM Prompt"]
+```
+
+### 6. Vector DB Synchronization & Lifecycle
+Ensuring the vector index remains in-sync with source data changes through real-time Change Data Capture (CDC) pipelines.
+
+```mermaid
+graph LR
+    Source["Source DB (Postgres/S3)"] --> Cdc["CDC Monitor"]
+    Cdc --> Update["Vector Index Update"]
+    Update --> Vector["Live Vector Store"]
+```
+
+### 7. Institutional AI Scorecard
+Measuring RAG performance across key institutional metrics: Faithfulness (Accuracy), Relevance, and Latency.
+
+```mermaid
+graph TD
+    Post["RAG Score: 94%"] --> Risk["Accuracy Gap: 6%"]
+    Post --- C1["Faithfulness (98%)"]
+    Post --- C2["Latency (240ms)"]
+```
+
+### 8. Identity & RBAC for AI Access (ACLs)
+Managing fine-grained retrieval permissions to ensure users only access document chunks they are authorized to view.
+
+```mermaid
+graph TD
+    Identity["User Identity"] --> Auth["AuthZ Gateway"]
+    Auth -->|Filter| Search["Vector Search + ACLs"]
+    Search --> Result["Authorized Results Only"]
+```
+
+### 9. Compliance & Privacy Filter (PII)
+Automatically detecting and redacting Personally Identifiable Information (PII) before it enters the embedding or retrieval cycle.
+
+```mermaid
+graph LR
+    Text["Raw Text Chunk"] --> Pii["PII Scanner"]
+    Pii -->|Mask| Safe["Anonymized Text"]
+    Safe --> Embed["Embedding Engine"]
+```
+
+### 10. IaC Deployment: RAG-as-Code Framework
+Using Terraform to deploy and manage the versioned distribution of the RAG infrastructure, including vector databases and API gateways.
+
+```mermaid
+graph LR
+    HCL["Infrastructure Code"] --> TF["Terraform Apply"]
+    TF --> Engine["RAG Intelligence Hub"]
+    Engine --> Store["Hardened Vector Store"]
+```
+
+### 11. Metadata Lake for Forensic RAG Audit
+Storing long-term records of every query, retrieved source, and generated response for hallucination investigation and audit.
+
+```mermaid
+graph LR
+    Query["User Query Event"] --> Stream["Forensic Stream"]
+    Stream --> Lake["RAG Metadata Lake"]
+    Lake --> Trends["Accuracy & ROI Trends"]
+```
 
 ---
 
 ## 🏛️ Core AI Pillars
 
-1. **Scalable Ingestion Pipeline**: High-throughput processing of diverse document formats with semantic chunking and metadata enrichment.
-2. **High-Performance Vector Store**: Sub-millisecond similarity search using optimized vector indices and metadata filtering.
-3. **Advanced Retrieval Strategies**: Hybrid search patterns (Keyword + Semantic) with Top-K context ranking and reranking capabilities.
-4. **Context-Aware Generation**: Prompt engineering patterns that inject authoritative context to reduce hallucinations and ensure factual accuracy.
-5. **RAG Evaluation Framework**: Systematic scoring of retrieval precision, context relevance, and answer quality (RAGAS-style metrics).
-6. **AI Observability**: Deep visibility into pipeline latency, token usage, and retrieval performance for continuous optimization.
-
----
-
-## 📐 Architecture Storytelling: 50+ Advanced Diagrams
-
-### 1. The RAG Pipeline Architecture
-*The flow from user query to grounded generation.*
-```mermaid
-graph TD
-    subgraph "Query & Ingress"
-        Query[User Query]
-        Embed[Embedding Engine]
-    end
-
-    subgraph "Retrieval Engine"
-        Search[Vector Similarity Search]
-        Store[(Vector Store)]
-        Filter[Metadata Filter]
-    end
-
-    subgraph "Generation Engine"
-        Context[Context Assembler]
-        Prompt[RAG Prompt Template]
-        LLM[LLM Inference]
-    end
-
-    Query -->|1. Encode| Embed
-    Embed -->|2. Search| Search
-    Search <-->|3. Lookup| Store
-    Search -->|4. Filter| Filter
-    Filter -->|5. Build Context| Context
-    Context -->|6. Inject| Prompt
-    Prompt -->|7. Synthesize| LLM
-    LLM -->|8. Grounded Answer| User[Final Response]
-```
-
-### 2. Document Ingestion & Indexing Flow
-*The pipeline for transforming raw data into searchable vectors.*
-```mermaid
-graph TD
-    Docs[Raw Documents] --> Clean[Text Cleaning & Preprocessing]
-    Clean --> Chunk[Semantic Chunking]
-    Chunk --> Metadata[Metadata Extraction]
-    Metadata --> Embed[Batch Embedding Generation]
-    Embed --> Index[Vector Indexing]
-    Index --> Registry[(Document Registry)]
-```
-
-### 3. Hybrid Search Pattern (Vector + Keyword)
-*Combining the precision of keywords with the recall of semantics.*
-```mermaid
-graph LR
-    Query[Query] --> Vector[Vector Search (Semantic)]
-    Query --> Keyword[BM25 Search (Keyword)]
-    
-    Vector --> ScoreV[Vector Score]
-    Keyword --> ScoreK[Keyword Score]
-    
-    ScoreV & ScoreK --> Fusion[Reciprocal Rank Fusion]
-    Fusion --> TopK[Top-K Ranked Results]
-```
-
-### 4. RAG Evaluation Methodology (The RAG Triad)
-```mermaid
-graph TD
-    Q[Query] --> R[Retrieval]
-    R --> A[Answer]
-    
-    R -->|Context Relevance| Q
-    A -->|Answer Faithfulness| R
-    A -->|Answer Relevance| Q
-```
-
-### 5. Multi-Tenant Vector Namespace Isolation
-```mermaid
-graph LR
-    subgraph "Vector Hub"
-        NS1[Namespace: HR]
-        NS2[Namespace: Engineering]
-        NS3[Namespace: Legal]
-    end
-    
-    User[User] --> Auth[RBAC Check]
-    Auth --> NS2
-```
-
-### 6. RAG Prompt Injection Template
-```mermaid
-graph LR
-    Context[Retrieved Knowledge] --> Template["Use the following context to answer the question: {{context}} --- Question: {{query}}"]
-    Template --> LLM[LLM]
-```
-
-### 7. Ingestion: The Chunking Strategy
-```mermaid
-graph LR
-    Doc[Doc] --> Fixed[Fixed Size]
-    Doc --> Semantic[Semantic/Para]
-```
-
-### 8. Generation: Hallucination Guardrails
-```mermaid
-graph LR
-    Gen[Gen] --> Check[Fact Check]
-```
-
-### 9. Component: Ingestion Engine
-```mermaid
-graph LR
-    C[Comp] --> I[Inge]
-```
-
-### 10. Component: Embedding Engine
-```mermaid
-graph LR
-    C[Comp] --> E[Embe]
-```
-
-### 11. Component: Retrieval Engine
-```mermaid
-graph LR
-    C[Comp] --> R[Retr]
-```
-
-### 12. Component: Generation Engine
-```mermaid
-graph LR
-    C[Comp] --> G[Gene]
-```
-
-### 13. Logic: Cosine Similarity
-```mermaid
-graph LR
-    L[Logi] --> C[Cosi]
-```
-
-### 14. Logic: Top-K Ranking
-```mermaid
-graph LR
-    L[Logi] --> T[TopK]
-```
-
-### 15. Logic: Semantic Chunking
-```mermaid
-graph LR
-    L[Logi] --> S[Sema]
-```
-
-### 16. Logic: Context Window Management
-```mermaid
-graph LR
-    L[Logi] --> C[Cont]
-```
-
-### 17. Architecture: Centralized Vector Store
-```mermaid
-graph LR
-    A[Arch] --> V[Vect]
-```
-
-### 18. Architecture: Multi-Source RAG
-```mermaid
-graph LR
-    A[Arch] --> M[Mult]
-```
-
-### 19. Architecture: RAG-over-APIs
-```mermaid
-graph LR
-    A[Arch] --> R[RAGo]
-```
-
-### 20. Pattern: Retrieval-then-Read
-```mermaid
-graph LR
-    P[Patt] --> R[Retr]
-```
-
-### 21. Pattern: Context Caching
-```mermaid
-graph LR
-    P[Patt] --> C[Cont]
-```
-
-### 22. Pattern: Semantic Cache
-```mermaid
-graph LR
-    P[Patt] --> S[Sema]
-```
-
-### 23. Security: Vector RBAC
-```mermaid
-graph LR
-    S[Secu] --> V[Vect]
-```
-
-### 24. Security: PII Masking in RAG
-```mermaid
-graph LR
-    S[Secu] --> P[PIIM]
-```
-
-### 25. Security: Secure Context Injection
-```mermaid
-graph LR
-    S[Secu] --> S[Secu]
-```
-
-### 26. Feature: Real-time Retrieval Graph
-```mermaid
-graph LR
-    F[Feat] --> R[Real]
-```
-
-### 27. Feature: Semantic Search Playground
-```mermaid
-graph LR
-    F[Feat] --> S[Sema]
-```
-
-### 28. Feature: Auto-chunking Optimizer
-```mermaid
-graph LR
-    F[Feat] --> A[Auto]
-```
-
-### 29. Compliance: RAG Data Lineage
-```mermaid
-graph LR
-    C[Comp] --> R[RAGD]
-```
-
-### 30. Compliance: Hallucination Audit
-```mermaid
-graph LR
-    C[Comp] --> H[Hall]
-```
-
-### 31. Infrastructure: Redis Vector Cache
-```mermaid
-graph LR
-    I[Infr] --> R[Redi]
-```
-
-### 32. Infrastructure: Postgres Metadata Lake
-```mermaid
-graph LR
-    I[Infr] --> P[Post]
-```
-
-### 33. Deployment: Kubernetes AI Pods
-```mermaid
-graph LR
-    D[Depl] --> K[Kube]
-```
-
-### 34. Deployment: Multi-Region Vector Hub
-```mermaid
-graph LR
-    D[Depl] --> M[Mult]
-```
-
-### 35. Monitoring: Retrieval Accuracy Dashboard
-```mermaid
-graph LR
-    M[Moni] --> R[Retr]
-```
-
-### 36. Monitoring: Generation Latency Heatmap
-```mermaid
-graph LR
-    M[Moni] --> G[Gene]
-```
-
-### 37. UI: RAG Query Workspace
-```mermaid
-graph LR
-    U[UI] --> R[RAGQ]
-```
-
-### 38. UI: Document Ingestion Control
-```mermaid
-graph LR
-    U[UI] --> D[DocI]
-```
-
-### 39. UI: Retrieval Visualization Map
-```mermaid
-graph LR
-    U[UI] --> R[Retr]
-```
-
-### 40. UI: Evaluation Metric Grid
-```mermaid
-graph LR
-    U[UI] --> E[Eval]
-```
-
-### 41. CI/CD: Vector build pipeline
-```mermaid
-graph LR
-    C[CICD] --> V[Vect]
-```
-
-### 42. CI/CD: Pipeline validation pipeline
-```mermaid
-graph LR
-    C[CICD] --> P[Pipe]
-```
-
-### 43. Strategy: Retrieval-First Design
-```mermaid
-graph LR
-    S[Stra] --> R[Retr]
-```
-
-### 44. Strategy: LLM-as-a-Judge Eval
-```mermaid
-graph LR
-    S[Stra] --> L[LLMa]
-```
-
-### 45. Feature: Multi-Model RAG
-```mermaid
-graph LR
-    F[Feat] --> M[Mult]
-```
-
-### 46. Feature: Streaming RAG Response
-```mermaid
-graph LR
-    F[Feat] --> S[Stre]
-```
-
-### 47. Feature: Source Citation Engine
-```mermaid
-graph LR
-    F[Feat] --> S[Sour]
-```
-
-### 48. Logic: Reranking Optimizer
-```mermaid
-graph LR
-    L[Logi] --> R[Rera]
-```
-
-### 49. Data Model: Document Entity
-```mermaid
-graph LR
-    D[Data] --> D[Docu]
-```
-
-### 50. Enterprise AI Maturity
-```mermaid
-graph LR
-    E[Entr] --> A[AI]
-```
+1.  **Scalable Ingestion Pipeline**: High-throughput processing of diverse document formats with semantic metadata enrichment.
+2.  **High-Performance Vector Store**: Sub-millisecond similarity search using optimized indices and namespaced isolation.
+3.  **Advanced Retrieval Strategies**: Hybrid search patterns (Keyword + Semantic) with multi-stage ranking and reranking.
+4.  **Context-Aware Generation**: Strategic prompt engineering that injects authoritative context to eliminate hallucinations.
+5.  **RAG Evaluation Framework**: Systematic scoring of retrieval precision, context relevance, and answer faithfulness.
+6.  **AI Observability**: Deep visibility into pipeline latency, token consumption, and retrieval accuracy for continuous tuning.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
 ### RAG Engine & APIs
-- **Framework**: Python 3.11+ / FastAPI.
-- **Vector Store**: In-memory optimized vector index with Cosine Similarity support.
-- **Embedding Simulation**: Deterministic mock embedding generation for pipeline testing.
-- **RAG Engine**: Complete retrieval-then-generate orchestration logic.
-- **Cache**: Redis for high-speed retrieval results and metadata caching.
-- **Persistence**: PostgreSQL for document registry, metadata, and evaluation results.
-- **Identity**: OIDC / JWT for secure management and query access.
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Vector Engine**: In-memory optimized vector index with Cosine Similarity support for rapid retrieval.
+*   **Chunking Logic**: Semantic-aware chunking with recursive character splitting for high-fidelity context.
+*   **Orchestration**: Custom RAG-chain management for multi-stage retrieval and re-ranking.
+*   **State Management**: PostgreSQL (Metadata Lake) and Redis (Semantic Cache).
 
-### Frontend (RAG Dashboard)
-- **Framework**: React 18 / Vite.
-- **Theme**: Dark Emerald / Indigo (AI Systems aesthetic).
-- **Visualization**: Recharts for retrieval accuracy and latency tracking.
+### RAG Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Dark Emerald / Indigo (AI Systems aesthetic).
+*   **Visualization**: Recharts for accuracy tracking, retrieval latency, and hallucination metrics.
 
-### Infrastructure
-- **Runtime**: AWS EKS (Kubernetes).
-- **Deployment**: Helm charts for engine and dashboard distribution.
-- **IaC**: Terraform (Modular with AI focus).
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS).
+*   **IaC**: Modular Terraform for deploying the RAG hub and vector store distributions.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/rag_hub`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/vectors`** | Vector storage and indexing | Pinecone, Milvus, Weaviate |
+| **`infrastructure/ingestion`** | Multi-modal data connectors | AWS Glue, Airbyte, Unstructured |
+| **`infrastructure/auditing`** | Forensic AI decision sinks | S3, Athena, Quicksight |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the RAG platform
 git clone https://github.com/devopstrio/rag-reference-architecture.git
 cd rag-reference-architecture
 
-# Setup environment
+# Configure environment
 cp .env.example .env
 
-# Launch the RAG stack (API, Engine, DB, Redis, UI)
+# Launch the RAG stack
 make up
 
-# Run a sample RAG query
+# Run a sample RAG query simulation
 make query-rag
 ```
+
 Access the RAG Dashboard at `http://localhost:3000`.
 
 ---
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<div align="center">
+  <p>© 2026 Devopstrio. All rights reserved.</p>
+</div>
